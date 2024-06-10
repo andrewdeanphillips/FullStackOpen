@@ -6,7 +6,7 @@ const App = () => {
   const [value, setValue] = useState('')
   const [countries, setCountries] = useState([])
   const [weather, setWeather] = useState(null)
-  const api_key = process.env.REACT_APP_API_KEY;
+  const api_key = import.meta.env.VITE_API_KEY;
   console.log(api_key)
 
   const handleChange = (event) => {
