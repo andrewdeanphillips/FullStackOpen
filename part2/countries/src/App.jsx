@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 
+
+
 const App = () => {
   const [value, setValue] = useState('')
   const [countries, setCountries] = useState([])
   const [weather, setWeather] = useState(null)
   const api_key = import.meta.env.VITE_API_KEY;
   console.log(api_key)
+  console.log(import.meta.env);
 
   const handleChange = (event) => {
     setValue(event.target.value)
