@@ -9,8 +9,6 @@ const App = () => {
   const [countries, setCountries] = useState([])
   const [weather, setWeather] = useState(null)
   const api_key = import.meta.env.VITE_API_KEY;
-  console.log(api_key)
-  console.log(import.meta.env);
 
   const handleChange = (event) => {
     setValue(event.target.value)
@@ -59,9 +57,9 @@ const App = () => {
       return (
         <div>
           <h2>{countries[0].name.common}</h2>
-          <div>capital {countries[0].capital}</div>
-          <div>area {countries[0].area}</div>
-          <h3>languages:</h3>
+          <div>Capital: {countries[0].capital}</div>
+          <div>Area: {countries[0].area} km2</div>
+          <h3>Languages:</h3>
           <ul>
             {Object.values(countries[0].languages).map(l => <li key={l}>{l}</li>)}
           </ul>
@@ -69,9 +67,9 @@ const App = () => {
           <h3>Weather in {countries[0].capital}</h3>
           {weather && weather.main && (
             <>
-              <div>Temperature {weather.main.temp}</div>
-              <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} />
-              <div>wind {weather.wind.speed} m/s</div>
+              <div>Temperature: {weather.main.temp} C</div>
+              <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} className ="weather-image" />
+              <div>Wind: {weather.wind.speed} m/s</div>
             </>
           )}
 
