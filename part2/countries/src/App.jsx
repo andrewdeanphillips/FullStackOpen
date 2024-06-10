@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import './App.css'
 
 const App = () => {
   const [value, setValue] = useState('')
   const [countries, setCountries] = useState([])
   const [weather, setWeather] = useState(null)
-  const api_key = import.meta.env.VITE_SOME_KEY
+  const api_key = process.env.REACT_APP_API_KEY;
   console.log(api_key)
 
   const handleChange = (event) => {
     setValue(event.target.value)
   }
-
 
 
   const onSearch = (event) => {
@@ -23,7 +23,8 @@ const App = () => {
         const reducedCountries = allCountries.filter(c => {
           return (
             c.name.common.toLowerCase().includes(value.toLowerCase())
-          )}
+          )
+        }
         )
 
         setCountries(reducedCountries)
@@ -33,12 +34,12 @@ const App = () => {
 
   const soloCountry = (country) => setCountries([country])
 
-  const getWeather = ({lat, lon}) => {
+  const getWeather = ({ lat, lon }) => {
     axios
-    .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`)
-    .then(response => {
-      setWeather(response.data)
-    })
+      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`)
+      .then(response => {
+        setWeather(response.data)
+      })
   }
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const App = () => {
       const lon = countries[0].capitalInfo.latlng[1];
       getWeather({ lat, lon });
     }
-  },[countries])
+  }, [countries])
 
 
   const renderCountryInfo = () => {
@@ -70,16 +71,16 @@ const App = () => {
               <div>wind {weather.wind.speed} m/s</div>
             </>
           )}
-          
+
         </div>
-        
+
 
       )
     }
 
     if (countries.length > 1) {
-      return countries.map(c => 
-        <div key={c.name.common}>
+      return countries.map(c =>
+        <div key={c.name.common} className="country-item">
           {c.name.common}
           <button onClick={() => soloCountry(c)}>show</button>
         </div>
@@ -88,12 +89,14 @@ const App = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={onSearch}>
-        find countries: <input value={value} onChange={handleChange} />
-        <button type="submit">submit</button>
-      </form>
-      <div>
+    <div className="container">
+      <div className="search">
+        <form onSubmit={onSearch}>
+          <h2>Find countries</h2> <input value={value} onChange={handleChange} />
+          <button type="submit">submit</button>
+        </form>
+      </div>
+      <div className="info">
         {renderCountryInfo()}
       </div>
     </div>
