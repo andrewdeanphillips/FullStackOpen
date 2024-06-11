@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/notes/665ef83df2791da026b64d3d
+Content-Type: application/json
+
+{
+    "content": "Bring back the pizza man",
+    "important": false
+}
