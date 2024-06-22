@@ -6,13 +6,34 @@ const app = require('../app')
 const api = supertest(app)
 
 const helper = require('./test_helper')
-
+const bcrypt = require('bcrypt')
 const Note = require('../models/note')
+const User = require('../models/user')
+
+let token
 
 describe('when there is initially some notes saved', () => {
   beforeEach(async () => {
     await Note.deleteMany({})
     await Note.insertMany(helper.initialNotes)
+
+    await User.deleteMany({})
+
+    const passwordHash = await bcrypt.hash('sekret', 10)
+    const user = new User({ username: 'root', passwordHash })
+
+    await user.save()
+
+    const loginDetails = { username: 'root', password: 'sekret' }
+
+    const loginResponse = await api
+      .post('/api/login')
+      .send(loginDetails)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    token = loginResponse.body.token
+    assert(token !== null)
   })
 
   test('notes are returned as json', async () => {
@@ -77,6 +98,7 @@ describe('when there is initially some notes saved', () => {
       await api
         .post('/api/notes')
         .send(newNote)
+        .set('Authorization', `Bearer ${token}` )
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
@@ -95,6 +117,7 @@ describe('when there is initially some notes saved', () => {
       await api
         .post('/api/notes')
         .send(newNote)
+        .set('Authorization', `Bearer ${token}` )
         .expect(400)
 
       const notesAtEnd = await helper.notesInDb()
@@ -121,6 +144,7 @@ describe('when there is initially some notes saved', () => {
     })
   })
 })
+
 
 after(async () => {
   await mongoose.connection.close()
