@@ -61,6 +61,24 @@ const newUser = {
     password: 'WWE'
 }
 
+const shortUsernameUser = {
+    username: 'ff',
+    name: 'Short UserMan',
+    password: 'fsdffsfs'
+}
+
+const shortPasswordUser = {
+    username: 'shortpass',
+    name: 'Short PassMan',
+    password: 'hc'
+}
+
+const existingUsernameUser = {
+    username: 'trumper',
+    name: 'Michael Trump',
+    password: 'trumpppppp'
+}
+
 const blogsInDb = async () => {
     const blogs = await Blog.find({})
     return blogs.map(blog => blog.toJSON())
@@ -78,7 +96,10 @@ module.exports = {
     blogWithoutTitle,
     blogWithoutUrl,
     initialUsers,
-    newUser, 
+    newUser,
+    shortUsernameUser,
+    shortPasswordUser,
+    existingUsernameUser,
     blogsInDb,
     usersInDb
 }
