@@ -93,6 +93,17 @@ test('a valid blog can be added', async () => {
     assert(contents.includes('LinkedIn Blog'))
 })
 
+test('a blog cannot be added added without a token', async () => {
+    await api
+        .post('/api/blogs')
+        .send(helper.newBlog)
+        .expect(401)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+})
+
 
 test('a blog without likes will be added with 0 likes', async () => {
     const response = await api
