@@ -1,9 +1,9 @@
-POST http://localhost:3005/api/blogs/
+POST http://localhost:3005/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9uZXBtIiwiaWQiOiI2Njc3OTZkNDUwMGY1MjI4ZjRlZDM4YzUiLCJpYXQiOjE3MTkxMTM0NDh9.CQUyhk8Tjb0VDus9GsK0RnfPu-VoStZ0xWf20hjp-O4
 
 {
-    "title": "Test for user",
-    "author": "Triple H",
+    "title": "Should show on user page",
     "url": "www.applepie.com",
     "likes": 4
 }

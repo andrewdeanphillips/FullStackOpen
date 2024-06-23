@@ -4,13 +4,11 @@ const User = require('../models/user')
 const initialBlogs = [
     {
         title: 'Facebook Blog',
-        author: 'Mark',
         url: 'https://www.facebook.com',
         likes: 5
     },
     {
         title: 'Myspace Blog',
-        author: 'Tom',
         url: 'https://www.myspace.com',
         likes: 3
     }
@@ -18,19 +16,16 @@ const initialBlogs = [
 
 const newBlog = {
     title: 'LinkedIn Blog',
-    author: 'CEO',
     url: 'https://www.linkedin.com',
     likes: 7
 }
 
 const blogWithoutLikes = {
     title: 'YouTube Blog',
-    author: 'John Cena',
     url: 'https://www.youtube.com'
 }
 
 const blogWithoutTitle = {
-    author: 'Triple H',
     url: 'https://www.instagram.com',
     likes: 10
 }
