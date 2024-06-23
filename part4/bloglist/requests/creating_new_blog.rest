@@ -1,10 +1,9 @@
-PUT http://localhost:3005/api/blogs/6668c98f0435718781277488
+POST http://localhost:3005/api/blogs/
 Content-Type: application/json
 
 {
-    "title": "Best Apple Pie Recipe",
+    "title": "Test for user",
     "author": "Triple H",
     "url": "www.applepie.com",
-    "likes": 4,
-    "id": "6668c98f0435718781277488"
+    "likes": 4
 }

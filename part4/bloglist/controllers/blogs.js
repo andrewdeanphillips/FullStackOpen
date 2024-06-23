@@ -3,12 +3,14 @@ const Blog = require('../models/blog')
 
 
 blogRouter.get('/', async (request, response) => {
-  const blogs = await Blog.find({})
+  const blogs = await Blog
+    .find({}).populate('user')
   response.json(blogs)
 })
 
 blogRouter.post('/', async (request, response) => {
   const blog = new Blog(request.body)
+  blog.user = '667751aa69cce7e9cf7bf956'
   const savedBlog = await blog.save()
   response.status(201).json(savedBlog)
 })
