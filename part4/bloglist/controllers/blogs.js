@@ -1,8 +1,7 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
 
-const jwt = require('jsonwebtoken')
+const middleware = require('../utils/middleware')
 
 
 blogRouter.get('/', async (request, response) => {
@@ -12,12 +11,8 @@ blogRouter.get('/', async (request, response) => {
 })
 
 
-blogRouter.post('/', async (request, response) => {
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
-  const user = await User.findById(decodedToken.id)
+blogRouter.post('/', middleware.userExtractor, async (request, response) => {
+  const user = request.user
 
   const blog = new Blog({
     title: request.body.title,
@@ -34,15 +29,12 @@ blogRouter.post('/', async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-blogRouter.delete('/:id', async (request, response) => {
+blogRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
   const blogToDelete = await Blog.findById(request.params.id)
 
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
-  }
+  const userMakingRequest = request.user
 
-  if (decodedToken.id !== blogToDelete.user.toString()) { 
+  if (userMakingRequest._id.toString() !== blogToDelete.user.toString()) { 
     return response.status(401).json({ error: 'blog can only be edited by its creator' })
   }
 
