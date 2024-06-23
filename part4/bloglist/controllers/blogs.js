@@ -11,7 +11,7 @@ blogRouter.get('/', async (request, response) => {
 })
 
 
-blogRouter.post('/', middleware.userExtractor, async (request, response) => {
+blogRouter.post('/', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
   const user = request.user
 
   const blog = new Blog({
@@ -29,7 +29,7 @@ blogRouter.post('/', middleware.userExtractor, async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-blogRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
+blogRouter.delete('/:id', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
   const blogToDelete = await Blog.findById(request.params.id)
 
   const userMakingRequest = request.user
