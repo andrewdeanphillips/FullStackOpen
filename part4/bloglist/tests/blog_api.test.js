@@ -27,17 +27,36 @@ const getValidTestToken = async () => {
     return validToken.body.token
 }
 
+const getValidTokenUser2 = async () => {
+    const username = helper.initialUsers[1].username;
+    const password = helper.initialUsers[1].password;
+
+    const loginDetails = {
+        username: username,
+        password: password
+    }
+
+    const validToken2 = await api
+        .post('/api/login')
+        .send(loginDetails)
+        .expect(200)
+
+    return validToken2.body.token
+}
+
 let validTestToken
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-
-    const blogObjects = helper.initialBlogs
-        .map(blog => new Blog(blog))
-    const promiseArray = blogObjects.map(blog => blog.save())
-    await Promise.all(promiseArray)
-
     validTestToken = await getValidTestToken()
+
+    const promiseArray = helper.initialBlogs.map(blog =>
+        api
+            .post('/api/blogs/')
+            .send(blog)
+            .set('Authorization', `Bearer ${validTestToken}`)
+    )
+    await Promise.all(promiseArray)
 })
 
 
@@ -104,6 +123,25 @@ test('a blog without a url cannot be added', async () => {
         .expect(400)
 })
 
+test('a blog cannot be deleted by a user that did not create it', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+    const validTestToken2 = await getValidTokenUser2()
+    await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .set('Authorization', `Bearer ${validTestToken2}`)
+        .expect(401)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+
+    const titles = blogsAtEnd.map(b => b.title)
+    assert(titles.includes(blogToDelete.title))
+
+})
+
 
 
 test('a blog can be deleted', async () => {
@@ -112,6 +150,7 @@ test('a blog can be deleted', async () => {
 
     await api
         .delete(`/api/blogs/${blogToDelete.id}`)
+        .set('Authorization', `Bearer ${validTestToken}`)
         .expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()
