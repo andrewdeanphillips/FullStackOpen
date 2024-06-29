@@ -1,0 +1,10 @@
+POST http://localhost:3006/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9uZXBtIiwiaWQiOiI2NjdmNGM2ZmY1MDRkOGQ4NzExNzRjZTEiLCJpYXQiOjE3MTk2MTg2NzV9.TPI3g2CcMDYcvYBnvMdC1zWO3Lpy2o6RNB3W9XCypjk
+
+{
+    "title": "Should show on user page",
+    "url": "www.applepie.com",
+    "likes": 4,
+    "author": "John Cena"
+}
