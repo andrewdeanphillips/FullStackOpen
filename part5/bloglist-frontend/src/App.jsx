@@ -9,8 +9,6 @@ import Togglable from "./components/Togglable";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [notificationText, setNotificationText] = useState("");
   const [notificationColor, setNotifcationColor] = useState("");
@@ -30,9 +28,7 @@ const App = () => {
     }
   }, []);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-
+  const handleLogin = async (username, password) => {
     try {
       const user = await loginService.login({
         username,
@@ -46,8 +42,6 @@ const App = () => {
 
       blogService.setToken(user.token);
       setUser(user);
-      setUsername("");
-      setPassword("");
     } catch (exception) {
       displayNotification("red", "wrong credentials");
     }
@@ -86,13 +80,7 @@ const App = () => {
     return (
       <div>
         <Notification color={notificationColor} text={notificationText} />
-        <LoginForm
-          username={username}
-          password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleLogin={handleLogin}
-        />
+        <LoginForm handleLogin={handleLogin} />
       </div>
     );
   }
