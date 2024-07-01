@@ -56,7 +56,7 @@ const App = () => {
   const handleCreate = async (blogObject) => {
     try {
       blogFormRef.current.toggleVisibility();
-      blogObject.user = user.username;
+      blogObject.user = user.id;
       const returnedBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(returnedBlog));
       displayNotification(
@@ -65,6 +65,26 @@ const App = () => {
       );
     } catch (error) {
       displayNotification("red", "Error adding message");
+    }
+  };
+
+  const addLike = async (blogObject) => {
+    try {
+      blogObject.likes = blogObject.likes + 1;
+      const returnedBlog = await blogService.put(blogObject);
+      console.log(returnedBlog)
+
+      setBlogs((prevBlogs) =>
+        prevBlogs.filter((b) => b.id !== blogObject._id).concat(returnedBlog)
+      );
+
+      displayNotification(
+        "green",
+        `liked added to ${returnedBlog.title} by ${returnedBlog.author}`
+      );
+    } catch (error) {
+      displayNotification("red", "Error adding like", error);
+      console.log(error.message);
     }
   };
 
@@ -95,7 +115,7 @@ const App = () => {
         <CreateBlogForm handleCreate={handleCreate} />
       </Togglable>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} addLike={addLike} />
       ))}
     </div>
   );
