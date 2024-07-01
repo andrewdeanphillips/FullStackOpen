@@ -16,7 +16,8 @@ const App = () => {
   const blogFormRef = useRef();
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    blogService.getAll()
+    .then((blogs) => setBlogsSortedByLikes(blogs))
   }, []);
 
   useEffect(() => {
@@ -27,6 +28,10 @@ const App = () => {
       blogService.setToken(user.token);
     }
   }, []);
+
+  const setBlogsSortedByLikes = (blogsToSort) => {
+    setBlogs(blogsToSort.sort((a, b) => -(a.likes - b.likes)));
+  };
 
   const handleLogin = async (username, password) => {
     try {
@@ -58,7 +63,7 @@ const App = () => {
       blogFormRef.current.toggleVisibility();
       blogObject.user = user.id;
       const returnedBlog = await blogService.create(blogObject);
-      setBlogs(blogs.concat(returnedBlog));
+      setBlogsSortedByLikes(blogs.concat(returnedBlog));
       displayNotification(
         "green",
         `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
@@ -72,10 +77,9 @@ const App = () => {
     try {
       blogObject.likes = blogObject.likes + 1;
       const returnedBlog = await blogService.put(blogObject);
-      console.log(returnedBlog)
+      console.log(returnedBlog);
 
-      setBlogs((prevBlogs) =>
-        prevBlogs.filter((b) => b.id !== blogObject._id).concat(returnedBlog)
+      setBlogsSortedByLikes(blogs.filter((b) => b.id !== blogObject._id).concat(returnedBlog)
       );
 
       displayNotification(
