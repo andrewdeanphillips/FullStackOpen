@@ -16,8 +16,7 @@ const App = () => {
   const blogFormRef = useRef();
 
   useEffect(() => {
-    blogService.getAll()
-    .then((blogs) => setBlogsSortedByLikes(blogs))
+    blogService.getAll().then((blogs) => setBlogsSortedByLikes(blogs));
   }, []);
 
   useEffect(() => {
@@ -69,7 +68,7 @@ const App = () => {
         `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
       );
     } catch (error) {
-      displayNotification("red", "Error adding message");
+      displayNotification("red", "Error adding blog");
     }
   };
 
@@ -77,18 +76,34 @@ const App = () => {
     try {
       blogObject.likes = blogObject.likes + 1;
       const returnedBlog = await blogService.put(blogObject);
-      console.log(returnedBlog);
 
-      setBlogsSortedByLikes(blogs.filter((b) => b.id !== blogObject._id).concat(returnedBlog)
+      setBlogsSortedByLikes(
+        blogs.filter((b) => b.id !== blogObject._id).concat(returnedBlog)
       );
 
       displayNotification(
         "green",
-        `liked added to ${returnedBlog.title} by ${returnedBlog.author}`
+        `like added to ${returnedBlog.title} by ${returnedBlog.author}`
       );
     } catch (error) {
       displayNotification("red", "Error adding like", error);
       console.log(error.message);
+    }
+  };
+
+  const deleteBlog = async (blogToDelete) => {
+    try {
+      const response = await blogService.erase(blogToDelete.id);
+      setBlogsSortedByLikes(
+        blogs.filter((b) => b.id !== blogToDelete.id)
+      );
+      displayNotification(
+        "green",
+        `${blogToDelete.title} by ${blogToDelete.author} deleted`
+      );
+    } catch (error) {
+      console.log(error.message)
+      displayNotification("red", "Error deleting blog");
     }
   };
 
@@ -119,7 +134,7 @@ const App = () => {
         <CreateBlogForm handleCreate={handleCreate} />
       </Togglable>
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} addLike={addLike} />
+        <Blog key={blog.id} blog={blog} addLike={addLike} deleteBlog={deleteBlog}/>
       ))}
     </div>
   );
