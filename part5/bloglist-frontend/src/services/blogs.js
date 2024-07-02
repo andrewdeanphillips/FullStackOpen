@@ -18,7 +18,7 @@ const create = async newObject => {
   }
 
   const response = await axios.post(baseUrl, newObject, config)
-  return response.data;
+  return response.data
 }
 
 const put = async newObject => {
@@ -26,7 +26,7 @@ const put = async newObject => {
     headers: { Authorization: token }
   }
   const response = await axios.put(`${baseUrl}/${newObject._id}`, newObject, config)
-  return response.data;
+  return response.data
 }
 
 const erase = async id => {
@@ -34,7 +34,7 @@ const erase = async id => {
     headers: { Authorization: token }
   }
   const response = await axios.delete(`${baseUrl}/${id}`, config)
-  return response;
+  return response
 }
 
 export default { getAll, create, setToken, put, erase }

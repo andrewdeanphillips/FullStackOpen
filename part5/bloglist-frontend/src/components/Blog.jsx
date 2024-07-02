@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 const Blog = ({ blog, addLike, deleteBlog }) => {
-  const [detailsVisible, setDetailsVisible] = useState(false);
+  const [detailsVisible, setDetailsVisible] = useState(false)
 
-  const hideWhenVisible = { display: detailsVisible ? "none" : "" };
-  const showWhenVisible = { display: detailsVisible ? "" : "none" };
+  const hideWhenVisible = { display: detailsVisible ? 'none' : '' }
+  const showWhenVisible = { display: detailsVisible ? '' : 'none' }
 
   const toggleVisibility = () => {
-    setDetailsVisible(!detailsVisible);
-  };
+    setDetailsVisible(!detailsVisible)
+  }
 
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: "solid",
+    border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
-  };
+  }
 
   const handleAddLike = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     addLike({
       _id: blog.id,
       user: blog.user.id,
@@ -27,20 +27,20 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
       author: blog.author,
       title: blog.title,
       url: blog.url,
-    });
-  };
+    })
+  }
 
   const handleDeleteBlog = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      deleteBlog(blog);
+      deleteBlog(blog)
     }
-  };
+  }
 
   return (
     <div style={blogStyle}>
       <div>
-        {blog.title} {blog.author}{" "}
+        {blog.title} {blog.author}{' '}
         <button style={hideWhenVisible} onClick={toggleVisibility}>
           view
         </button>
@@ -58,7 +58,7 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
         <button onClick={handleDeleteBlog}>remove</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Blog;
+export default Blog

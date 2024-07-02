@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 const LoginForm = ({
   handleLogin,
 }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const login = (event) => {
-    event.preventDefault();
-    handleLogin(username, password);
-    setUsername("");
-    setPassword("");
+    event.preventDefault()
+    handleLogin(username, password)
+    setUsername('')
+    setPassword('')
   }
 
   return (
@@ -37,7 +37,7 @@ const LoginForm = ({
         <button type="submit">login</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
