@@ -53,6 +53,39 @@ describe('Blog app', () => {
             const bloglistDiv = await page.locator('.blog')
             await expect(bloglistDiv.getByText('test blog Triple H')).toBeVisible()
         })
+
+        test('two new blogs can be created', async ({ page }) => {
+            await createBlog(page, 'test blog', 'Triple H', 'www.hhh.com')
+            
+            const notificationDiv = await page.locator('.notification')
+            await expect(notificationDiv).toContainText('a new blog test blog by Triple H added')
+
+            const bloglistDiv = await page.locator('.blog')
+            await expect(bloglistDiv.getByText('test blog Triple H')).toBeVisible()
+
+            await createBlog(page, 'second blog', 'Triple H', 'www.hhh.com/second')
+            
+            const notificationDiv2 = await page.locator('.notification')
+            await expect(notificationDiv2).toContainText('a new blog second blog by Triple H added')
+
+            const bloglistDiv2 = await page.locator('.blog')
+            await expect(bloglistDiv2.getByText('second blog Triple H')).toBeVisible()
+        })
+
+        describe('and a blog exists', () => {
+            beforeEach(async ({ page }) => {
+                await createBlog(page, 'test blog', 'Triple H', 'www.hhh.com')
+                const notificationDiv = await page.locator('.notification')
+                await expect(notificationDiv).toContainText('a new blog test blog by Triple H added')
+            })
+
+            test('a like can be added', async ({ page }) => {
+                await page.getByRole('button', { name: 'view'}).click()
+                await page.getByRole('button', { name: 'like'}).click()
+                await expect(page.getByText('likes 1')).toBeVisible()
+            })
+
+        })
     })
 
 
