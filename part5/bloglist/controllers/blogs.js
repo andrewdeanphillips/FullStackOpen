@@ -5,7 +5,6 @@ const middleware = require('../utils/middleware')
 
 
 blogRouter.get('/', async (request, response) => {
-  console.log('here')
   const blogs = await Blog
     .find({}).populate('user')
   response.json(blogs)
@@ -26,6 +25,7 @@ blogRouter.post('/', middleware.tokenExtractor, middleware.userExtractor, async 
   })
 
   const savedBlog = await blog.save()
+  await savedBlog.populate('user')
   user.blogs = user.blogs.concat(savedBlog._id)
   await user.save()
 

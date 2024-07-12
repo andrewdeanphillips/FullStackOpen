@@ -99,6 +99,7 @@ describe('Blog app', () => {
                 await expect(page.locator('.blog').getByText('test blog Triple H')).toBeVisible()
 
                 await page.getByRole('button', { name: 'view'}).click()
+                
 
                 page.on('dialog', dialog => dialog.accept())
                 await page.getByRole('button', { name: 'remove'}).click()
@@ -116,12 +117,38 @@ describe('Blog app', () => {
                 await page.getByRole('button', { name: 'view'}).click()
 
                 page.on('dialog', dialog => dialog.accept())
-                await page.getByRole('button', { name: 'remove'}).click()
+
+                
+                // Make the delete button visible
+                await page.evaluate(() => {
+                    const deleteButton = document.querySelector('.deleteButton');
+                    deleteButton.style.display = 'block'; // Or 'inline', depending on your CSS
+                });
+
+                // Now wait for the delete button to appear and be interactable
+                const deleteButton = await page.waitForSelector('.deleteButton', { state: 'visible' });
+
+                await deleteButton.click();
+                
+
 
                 const notificationDiv = await page.locator('.notification')
                 await expect(notificationDiv).toContainText('Error deleting blog')
 
                 await expect(page.locator('.blog').getByText('test blog Triple H')).toBeVisible()
+            })
+
+            test('a different user will not see the delete button', async ({ page }) => {
+                await page.getByRole('button', { name: 'logout'}).click()
+                await loginWith(page, 'user2', 'password')
+                await expect(page.getByText('Mr 2 logged in')).toBeVisible()
+
+                await page.getByRole('button', { name: 'view'}).click()
+
+                const removeButton = await page.getByRole('button', { name: 'remove'})
+                const isVisible = await removeButton.isVisible()
+
+                await expect(isVisible).toBeFalsy()
             })
         })
     })

@@ -124,6 +124,9 @@ const App = () => {
     )
   }
 
+  console.log('User:', user)
+  console.log('Blogs:', blogs)
+
   return (
     <div>
       <Notification color={notificationColor} text={notificationText} />
@@ -133,9 +136,9 @@ const App = () => {
       <Togglable buttonLabel="create" ref={blogFormRef}>
         <CreateBlogForm handleCreate={handleCreate} />
       </Togglable>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} addLike={addLike} deleteBlog={deleteBlog}/>
-      ))}
+      {blogs.map((blog) => 
+          <Blog key={blog.id} blog={blog} addLike={addLike} deleteBlog={deleteBlog} userIsOwner={blog.user.username == user.username}/>
+      )}
     </div>
   )
 }
