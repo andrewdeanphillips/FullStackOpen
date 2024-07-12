@@ -52,7 +52,7 @@ const CreateBlogForm = ({ handleCreate }) => {
           />
         </div>
         <button type="submit" onClick={addBlog}>
-          create
+          submit
         </button>
       </form>
     </div>

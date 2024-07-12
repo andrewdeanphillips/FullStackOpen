@@ -1,4 +1,5 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
+const { loginWith, createBlog } = require('./helper')
 
 describe('Blog app', () => {
     beforeEach(async ({ page, request }) => {
@@ -22,25 +23,36 @@ describe('Blog app', () => {
 
     describe('Login', () => {
         test('succeeds with correct credentials', async ({ page }) => {
-            await page.getByTestId('username').fill('jc28')
-            await page.getByTestId('password').fill('the champ')
-    
-            await page.getByRole('button', { name: 'login' }).click()
-    
+            await loginWith(page, 'jc28', 'the champ')
             await expect(page.getByText('John Cena logged in')).toBeVisible()
         })
 
         test('fails with wrong credentials', async ({ page }) => {
-            await page.getByTestId('username').fill('jc28')
-            await page.getByTestId('password').fill('wrongpassword')
-    
-            await page.getByRole('button', { name: 'login' }).click()
+            await loginWith(page, 'jc28', 'wrongpassword')
     
             const notificationDiv = await page.locator('.notification')
             await expect(notificationDiv).toContainText('wrong credentials')
             await expect(page.getByText('John Cena logged in')).not.toBeVisible()
         })
 
+    })
+
+    describe('When logged in', () => {
+        beforeEach(async ({ page }) => {
+            await loginWith(page, 'jc28', 'the champ')
+            await expect(page.getByText('John Cena logged in')).toBeVisible()
+        })
+
+
+        test('a new blog can be created', async ({ page }) => {
+            await createBlog(page, 'test blog', 'Triple H', 'www.hhh.com')
+            
+            const notificationDiv = await page.locator('.notification')
+            await expect(notificationDiv).toContainText('a new blog test blog by Triple H added')
+
+            const bloglistDiv = await page.locator('.blog')
+            await expect(bloglistDiv.getByText('test blog Triple H')).toBeVisible()
+        })
     })
 
 
