@@ -12,6 +12,15 @@ describe('Blog app', () => {
                 }
             }
         )
+
+        await request.post('/api/users', {
+            data: {
+                username: 'user2',
+                name: 'Mr 2',
+                password: 'password'
+            }
+        }
+    )
         await page.goto('/')
     })
 
@@ -77,6 +86,7 @@ describe('Blog app', () => {
                 await createBlog(page, 'test blog', 'Triple H', 'www.hhh.com')
                 const notificationDiv = await page.locator('.notification')
                 await expect(notificationDiv).toContainText('a new blog test blog by Triple H added')
+    
             })
 
             test('a like can be added', async ({ page }) => {
@@ -85,6 +95,34 @@ describe('Blog app', () => {
                 await expect(page.getByText('likes 1')).toBeVisible()
             })
 
+            test('the creator can delete it', async ({ page }) => {
+                await expect(page.locator('.blog').getByText('test blog Triple H')).toBeVisible()
+
+                await page.getByRole('button', { name: 'view'}).click()
+
+                page.on('dialog', dialog => dialog.accept())
+                await page.getByRole('button', { name: 'remove'}).click()
+
+                await expect(page.locator('.blog').getByText('test blog Triple H')).not.toBeVisible()
+            })
+
+            test('a different user cannot delete it', async ({ page }) => {
+                await page.getByRole('button', { name: 'logout'}).click()
+                await loginWith(page, 'user2', 'password')
+                await expect(page.getByText('Mr 2 logged in')).toBeVisible()
+
+                await expect(page.locator('.blog').getByText('test blog Triple H')).toBeVisible()
+
+                await page.getByRole('button', { name: 'view'}).click()
+
+                page.on('dialog', dialog => dialog.accept())
+                await page.getByRole('button', { name: 'remove'}).click()
+
+                const notificationDiv = await page.locator('.notification')
+                await expect(notificationDiv).toContainText('Error deleting blog')
+
+                await expect(page.locator('.blog').getByText('test blog Triple H')).toBeVisible()
+            })
         })
     })
 
