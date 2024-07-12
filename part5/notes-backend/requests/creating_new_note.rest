@@ -1,4 +1,4 @@
-POST http://localhost:3001/api/notes
+POST http://localhost:3001/api/testing/reset
 Content-Type: application/json
 //Authorization:   Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY2NzVmNzcxMTgzY2EzNTYyODk0Mzg4YyIsImlhdCI6MTcxOTAxMzU0Mn0.fpABxdZ1z1GtWfLqy3z1-Uh6NzDsjLkKbPJ_qiOyiD8
 

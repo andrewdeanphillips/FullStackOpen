@@ -21,11 +21,16 @@ const LoginForm = ({
       <form onSubmit={handleSubmit}>
         <div>
           username
-          <input value={username} onChange={({ target }) => setUsername(target.value)} />
+          <input
+            data-testid='username'
+            value={username}
+            onChange={({ target }) => setUsername(target.value)}
+          />
         </div>
         <div>
           password
           <input
+            data-testid='password'
             type="password"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
