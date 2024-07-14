@@ -53,7 +53,7 @@ const Blog = ({ blog, addLike, deleteBlog, userIsOwner }) => {
       <div style={showWhenVisible} className='additionalBlogInfo'>
         {blog.url}
         <br></br>
-        <span>likes {blog.likes}</span>
+        <span className='likes-count' data-likes={blog.likes}>likes {blog.likes}</span>
         <button onClick={handleAddLike}>like</button>
         <br></br>
         {blog.user.name}

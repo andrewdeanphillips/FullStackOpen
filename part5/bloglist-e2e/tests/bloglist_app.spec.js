@@ -1,5 +1,5 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
-const { loginWith, createBlog } = require('./helper')
+const { loginWith, createBlog, addLikes } = require('./helper')
 
 describe('Blog app', () => {
     beforeEach(async ({ page, request }) => {
@@ -149,6 +149,63 @@ describe('Blog app', () => {
                 const isVisible = await removeButton.isVisible()
 
                 await expect(isVisible).toBeFalsy()
+            })
+        })
+
+        describe('and multiple blogs exist', () =>{
+            beforeEach(async ({ page }) => {
+                await createBlog(page, 'blog 1', 'Triple H', 'www.hhh.com')
+                await createBlog(page, 'blog 2', 'Triple H', 'www.hhh.com')
+                await createBlog(page, 'blog 3', 'Triple H', 'www.hhh.com') 
+            })
+
+            test('a like can be added', async ({ page }) => {
+                await page.getByText('blog 1').getByRole('button', { name: 'view'}).click()
+                await page.getByRole('button', { name: 'like' }).first().click()
+                await expect(page.getByText('likes 1')).toBeVisible()
+            })
+
+            test('blogs are sorted by most likes', async ({ page }) => {
+                await page.getByText('blog 1').getByRole('button', { name: 'view'}).click()
+                await page.getByText('blog 2').getByRole('button', { name: 'view'}).click()
+                await page.getByText('blog 3').getByRole('button', { name: 'view'}).click()
+
+                const blogs = await page.locator('.blog').all()
+
+                const blog1 = await page.locator('.blog').filter({ hasText: 'blog 1'})
+                const blog2 = await page.locator('.blog').filter({ hasText: 'blog 2'})
+                const blog3 = await page.locator('.blog').filter({ hasText: 'blog 3'})
+
+
+                await addLikes(page, blog1, 1)
+                await addLikes(page, blog2, 2)
+                await addLikes(page, blog3, 3)
+
+
+
+                expect(await blog1.locator('.likes-count').getAttribute('data-likes')).toBe('1')
+                expect(await blog2.locator('.likes-count').getAttribute('data-likes')).toBe('2')
+                expect(await blog3.locator('.likes-count').getAttribute('data-likes')).toBe('3')
+                
+                const likesCounts = await Promise.all(
+                    blogs.map(async (blog) => {
+                        const likes = await blog.locator('.likes-count').getAttribute('data-likes')
+                        return parseInt(likes)
+                    })
+                )
+            
+                for (let i = 0; i < likesCounts.length-1; i++) {
+                    console.log(likesCounts[i])
+                    expect(likesCounts[i]).toBeGreaterThanOrEqual(likesCounts[i + 1])
+                }
+
+                await addLikes(page, blog1, 4)
+
+                for (let i = 0; i < likesCounts.length-1; i++) {
+                    console.log(likesCounts[i])
+                    expect(likesCounts[i]).toBeGreaterThanOrEqual(likesCounts[i + 1])
+                }
+
             })
         })
     })
