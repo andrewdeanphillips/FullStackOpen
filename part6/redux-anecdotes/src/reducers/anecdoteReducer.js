@@ -25,6 +25,9 @@ const reducer = (state = initialState, action) => {
   console.log('action', action)
 
   switch(action.type) {
+  case 'ADD_ANECDOTE': {
+    return [...state, asObject(action.payload.anecdote)]
+  }
   case 'ADD_VOTE': {
     console.log('payload: ', action.payload)
     const id = action.payload.id
@@ -53,6 +56,13 @@ export const addVoteTo = (id) => {
   return {
     type: 'ADD_VOTE',
     payload: { id }
+  }
+}
+
+export const addAnecdote = (anecdote) => {
+  return {
+    type: 'ADD_ANECDOTE',
+    payload: { anecdote }
   }
 }
 
