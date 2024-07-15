@@ -32,21 +32,21 @@ describe('noteReducer', () => {
         important: false,
         id: 2
       }]
-  
+
     const action = {
       type: 'TOGGLE_IMPORTANCE',
       payload: {
         id: 2
       }
     }
-  
+
     deepFreeze(state)
     const newState = noteReducer(state, action)
-  
+
     expect(newState).toHaveLength(2)
-  
+
     expect(newState).toContainEqual(state[0])
-  
+
     expect(newState).toContainEqual({
       content: 'state changes are made with actions',
       important: true,
