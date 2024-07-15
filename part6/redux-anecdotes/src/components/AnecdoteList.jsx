@@ -4,7 +4,6 @@ import { addVoteTo } from '../reducers/anecdoteReducer'
 const AnecdoteList = () => {
   const anecdotes = useSelector(({ filter, anecdotes }) => {
     return anecdotes.filter(anecdote => {
-
       return anecdote.content.toLowerCase().includes(filter.toLowerCase())
     })
 
