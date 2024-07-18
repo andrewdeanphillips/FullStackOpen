@@ -39,6 +39,11 @@
       "id": "849b",
       "content": "frogman",
       "votes": 0
+    },
+    {
+      "id": "8a13",
+      "content": "testing redux thunk",
+      "votes": 0
     }
   ]
 }
