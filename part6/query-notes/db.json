@@ -1,0 +1,39 @@
+{
+  "notes": [
+    {
+      "content": "the app state is in redux store",
+      "important": true,
+      "id": "1"
+    },
+    {
+      "content": "state changes are made with actions",
+      "important": false,
+      "id": "2"
+    },
+    {
+      "id": "21b7",
+      "content": "dog",
+      "important": false
+    },
+    {
+      "id": "c8c4",
+      "content": "hello",
+      "important": false
+    },
+    {
+      "id": "0680",
+      "content": "testing",
+      "important": false
+    },
+    {
+      "id": "71c0",
+      "content": "dogmanfree",
+      "important": true
+    },
+    {
+      "id": "4554",
+      "content": "BOSS",
+      "important": true
+    }
+  ]
+}
