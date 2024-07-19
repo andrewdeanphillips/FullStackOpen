@@ -11,10 +11,17 @@ const App = () => {
 
   const newAnecdoteMutation = useMutation({
     mutationFn: createAnecdote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
+    onSuccess: (createdAnecdote) => {
+        queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
+        notificationDispatch({ type: 'SET', payload: `Created anecdote: ${createdAnecdote.content}` })
+        setTimeout(() => notificationDispatch({ type: 'CLEAR' }), 5000)
+    },
+    onError: (error) => {
+        notificationDispatch({ type: 'SET', payload: error.message })
+        setTimeout(() => notificationDispatch({ type: 'CLEAR' }), 5000)
     }
-  })
+})
+
 
   const updateAnecdoteMutation = useMutation({
     mutationFn: updateAnecdote,
