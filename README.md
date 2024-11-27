@@ -1,51 +1,51 @@
-# Full Stack open - モダンウェブ開発コース
+# Full Stack Open - Modern Web Development Course
 
-[Full Stack open](https://fullstackopen.com/en/) 
+[Full Stack Open](https://fullstackopen.com/en/)
 
-私はコンピュータサイエンスの学生ですが、学業で基礎知識を多く学びました。しかし、現代のウェブ開発技術についての知識が不足していると感じています。そのため、私の学習を補完したいと思い、ReactやNode.js、Express、RESTful APIなどの現代の技術を学べるこのコースを選びました。  
+I am a computer science student and have gained foundational knowledge through my studies. However, I feel that my understanding of modern web development technologies is insufficient. To address this, I decided to take this course, which covers contemporary technologies such as React, Node.js, Express, and RESTful APIs.
 
-このリポジトリには、私が完了した演習のコードが含まれています。
+This repository contains the code for exercises I have completed.
 
-## コース完了状況
+## Course Completion Status
 
-- [x] Part 0: Webアプリケーションの基本
-- [x] Part 1: Reactの紹介
-- [x] Part 2: サーバーとの通信
-- [x] Part 3: NodeJSとExpressを使ったサーバープログラミング
-- [ ] Part 4: Expressサーバーのテスト、ユーザー管理
-- [ ] Part 5: Reactアプリのテスト
-- [ ] Part 6: 高度な状態管理 (Redux)
-- [ ] Part 7: Reactルーター、カスタムフック、CSSとwebpackによるアプリのスタイリング
-- [ ] Part 8: GraphQL
-- [ ] Part 9: TypeScript
-- [ ] Part 10: React Native
-- [ ] Part 11: CI/CD
-- [ ] Part 12: コンテナ
-- [ ] Part 13: リレーショナルデータベースの使用
+- [x] Part 0: Fundamentals of Web Applications  
+- [x] Part 1: Introduction to React  
+- [x] Part 2: Communicating with the Server  
+- [x] Part 3: Programming a Server with NodeJS and Express  
+- [x] Part 4: Testing Express Servers and User Management  
+- [x] Part 5: Testing React Apps  
+- [x] Part 6: Advanced State Management (Redux)  
+- [x] Part 7: React Router, Custom Hooks, CSS & Webpack  
+- [ ] Part 8: GraphQL  
+- [ ] Part 9: TypeScript  
+- [ ] Part 10: React Native  
+- [ ] Part 11: CI/CD  
+- [ ] Part 12: Containers  
+- [ ] Part 13: Using Relational Databases  
 
 ---
 
-以下の情報は、[https://fullstackopen.com/en/part0/general_info](https://fullstackopen.com/en/part0/general_info) からの抜粋を翻訳したものです。
+The following is a summary from [https://fullstackopen.com/en/part0/general_info](https://fullstackopen.com/en/part0/general_info).
 
-## コース概要
+## Course Overview
 
-このコースは、JavaScriptを使用したモダンなウェブ開発の入門編です。主な焦点は、Reactで実装されたシングルページアプリケーションと、それをサポートするNode.jsで実装されたRESTfulおよびGraphQLウェブサービスにあります。コースには、TypeScript、React Native、および継続的インテグレーションに関する部分も含まれています。
+This course is an introduction to modern web development with JavaScript. The main focus is on single-page applications implemented with React and supporting them with RESTful and GraphQL web services implemented with Node.js. The course also has parts on TypeScript, React Native, and Continuous integration.
 
-他のトピックには、アプリケーションのデバッグ、コンテナ技術、設定、ランタイム環境の管理、およびデータベースが含まれます。
+Other topics include debugging applications, container technology, configuration, managing runtime environments, and databases.
 
-## 前提条件
-参加者は、優れたプログラミングスキル、基本的なウェブプログラミングとデータベースの知識、およびGitバージョン管理システムの基本を理解している必要があります。また、粘り強さと独立して問題を解決し情報を探求する能力も必要です。
+## Prerequisites
 
-JavaScriptまたはその他のコーストピックの事前知識は必要ありません。
+Participants are expected to have good programming skills, basic knowledge of web programming and databases, and know the basics of the Git version control system. You are also expected to have perseverance and a capacity for solving problems and seeking information independently.
 
-どの程度のプログラミング経験が必要ですか？一概には言えませんが、自分の使用する言語にかなり精通している必要があります。このレベルの流暢さを身につけるには、通常少なくとも100～200時間の練習が必要です。
+### How much programming experience is needed?  
+While this varies, participants should have a solid grasp of their programming language of choice. Typically, achieving this level of proficiency requires at least 100–200 hours of practice.
 
-## コース資料
-コース資料は、1パートずつ順番に読むことを意図しています。
+## Course Material
 
-資料には演習が含まれており、それぞれの演習を解決するための十分な情報が前の資料に提供されています。資料を読み進めながら演習を行うことができますが、全ての資料を読んでから演習を始めることも有益です。
+The course material is meant to be read one part at a time and in order.
 
-コースの多くの部分で、演習は小さな部分ずつ一つの大きなアプリケーションを構築します。いくつかの演習アプリケーションは、複数の部分にわたって開発されます。
+The material contains exercises, which are placed so that the preceding material provides enough information for solving each exercise. You can do the exercises as you encounter them in the material, but it can also be beneficial to read all of the material in the part before starting with the exercises.
 
-コース資料は、部分ごとに変化する段階的に拡張される例題アプリケーションに基づいています。小さな変更を独自に加えながらコードを追っていくのが最良です。各部分の各ステップの例題アプリケーションのコードはGitHubで見つけることができます。
+In many parts of the course, the exercises build one larger application one small piece at a time. Some of the exercise applications are developed through multiple parts.
 
+The course material is based on incrementally expanding example applications, which change from part to part. It's best to follow the code along while making small modifications independently. The code of the example applications for each step of each part can be found on GitHub.
